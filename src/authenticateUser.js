@@ -9,26 +9,28 @@ export const authenticateUser = function (userName, password) {
       userName,
       password,
     };
-    localStorage.setItem('userinfo', JSON.stringify(userinfo))
+    localStorage.setItem('userinfo', userinfo)
     resolve(userinfo);
   });
 
 }
 
 const defaultUserAuthState = {
-  authenticated: null,
+  authenticated: {},
   info: null,
 };
 
 const getAuthenticatedInfo = () => {
-  const token = localStorage.getItem('userinfo');
-  if (!token) {
-    return defaultUserAuthState;
+  let token = localStorage.getItem('userinfo');
+  // token = Jtoken);
+  // console.log('token', token, typeof token);
+  if (token && token.userName) {
+    return {
+      authenticated: true,
+      info: token,
+    }
   }
-  return {
-    authenticated: true,
-    info: JSON.parse(token),
-  }
+  return defaultUserAuthState;
 
 };
 
@@ -57,7 +59,7 @@ export function useAuthenticateUser() {
   }
 
   function handleLogout() {
-    localStorage.setItem('userinfo', null)
+    localStorage.setItem('userinfo', {})
     setAuthenticateUser({
       authenticated: false,
       info: null,

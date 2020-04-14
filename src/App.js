@@ -13,11 +13,12 @@ import Login from './Login';
 export const paths = {
   home: '/',
   login: '/',
-  layout: '/layout/none',
+  layout: '/layout/img',
 }
 
 function ProtectedRoute(props) {
   const [userAuthState] = useAuth();
+  // console.log('userAuthState', userAuthState)
   return userAuthState.authenticated ? (
     <Route {...props} />
   ) : (

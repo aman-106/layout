@@ -57,14 +57,14 @@ export default function Layout(props) {
         <span className="header__title"></span>
         <button className="header__logout" onClick={handleLogout}>Logout</button>
       </div>
-      <div class="grid">
+      <div className="grid">
         {
           imageArr.map(function (img) {
             // farm_id, server, photo_id, secret
             const url = getImgUrl(img['-farm'], img['-server'], img['-id'], img['-secret']);
             return (
-              <div className="item photo">
-                <div class={imgSelId === img['-id'] ? 'content highlight' : 'content'} onClick={handleSelectImg(img['-id'])}><img class="photothumb" src={url} alt={'img'} /></div>
+              <div className="item photo" key={img['-id']}>
+                <div className={imgSelId === img['-id'] ? 'content highlight' : 'content'} onClick={handleSelectImg(img['-id'])}><img className="photothumb" src={url} alt={'img'} /></div>
               </div>
 
             )
