@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import imagesJson from './images'
 import imagesLoaded from 'imagesloaded';
 import { useAuth } from './authenticateUser';
@@ -39,8 +39,11 @@ export default function App() {
   }, []);
 
   const [userAuthState, handleAuthenticateUser, handleLogout] = useAuth();
+  const [imgSelId, setImgSelid] = useState('');
 
-
+  function handleSelectImg(id) {
+    return () => setImgSelid(id);
+  }
 
   const imageArr = imagesJson.rsp.photos.photo;
 
@@ -57,7 +60,7 @@ export default function App() {
             const url = getImgUrl(img['-farm'], img['-server'], img['-id'], img['-secret']);
             return (
               <div className="item photo">
-                <div class="content"><img class="photothumb" src={url} alt={'img'} /></div>
+                <div class={imgSelId === img['-id'] ? 'content highlight' : 'content'} onClick={handleSelectImg(img['-id'])}><img class="photothumb" src={url} alt={'img'} /></div>
               </div>
 
             )
