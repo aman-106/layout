@@ -1,11 +1,41 @@
 import React from "react";
+import Layout from './Layout';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import "./styles.css";
+import { AuthProvider, useAuth } from './authenticateUser';
+import Login from './Login';
+
+export const paths = {
+  home: '/',
+  login: '/',
+  layout: '/layout'
+}
+
+function ProtectedRoute(props) {
+  const [userAuthState] = useAuth();
+  return userAuthState.authenticated ? (
+    <Route {...props} />
+  ) : (
+      <Redirect to={paths.home} />
+    );
+}
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <AuthProvider>
+        <Router basename={paths.home}>
+          <Switch>
+            <Route exact path={paths.login} component={Login} />
+            <ProtectedRoute exact path={paths.layout} component={Layout} />
+          </Switch>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }
