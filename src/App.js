@@ -13,7 +13,7 @@ import Login from './Login';
 export const paths = {
   home: '/',
   login: '/',
-  layout: '/layout'
+  layout: '/layout/none',
 }
 
 function ProtectedRoute(props) {
@@ -32,7 +32,7 @@ export default function App() {
         <Router basename={paths.home}>
           <Switch>
             <Route exact path={paths.login} component={Login} />
-            <ProtectedRoute exact path={paths.layout} component={Layout} />
+            <ProtectedRoute path={'/layout/:id'} component={Layout} />
           </Switch>
         </Router>
       </AuthProvider>

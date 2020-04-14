@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import imagesJson from './images'
 import imagesLoaded from 'imagesloaded';
+import { paths } from './App';
 import { useAuth } from './authenticateUser';
 
 function getImgUrl(farm_id, server, photo_id, secret) {
   return `https://farm${farm_id}.staticflickr.com/${server}/${photo_id}_${secret}.jpg`;
 }
 
-export default function App() {
+export default function Layout(props) {
   const allItems = document.getElementsByClassName("item");
 
   function resizeGridItem(item) {
@@ -42,7 +43,10 @@ export default function App() {
   const [imgSelId, setImgSelid] = useState('');
 
   function handleSelectImg(id) {
-    return () => setImgSelid(id);
+    return () => {
+      setImgSelid(id)
+      props.history.push(paths.layout + '/' + id);
+    };
   }
 
   const imageArr = imagesJson.rsp.photos.photo;
